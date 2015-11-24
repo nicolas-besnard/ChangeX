@@ -36,9 +36,10 @@ end
 @back << @wheel
 
 @cockpit = Changex::EnginePart.new(name: "cockpit", price: 1000)
-@cockpit << @steering_wheel
-@cockpit << @front
-@cockpit << @back
+@cockpit << @wheel
+# @cockpit << @steering_wheel
+# @cockpit << @front
+# @cockpit << @back
 
 @car << @cockpit
 

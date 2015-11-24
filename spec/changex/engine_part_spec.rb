@@ -44,4 +44,19 @@ describe Changex::EnginePart do
       end
     end
   end
+
+  describe "#find_first" do
+    it "returns the first element matching the predicate" do
+      engine_part_1 = described_class.new(name: "1", price: 10)
+      engine_part_11 = described_class.new(name: "11", price: 5)
+      engine_part_111 = described_class.new(name: "111", price: 2.5)
+
+      engine_part_11 << engine_part_111
+      engine_part_1 << engine_part_11
+
+      ret = engine_part_1.find_first(predicate: -> (part) { part == engine_part_111 })
+
+      expect(ret).to eql(engine_part_111)
+    end
+  end
 end

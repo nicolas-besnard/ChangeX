@@ -41,6 +41,38 @@ module Changex
       ret
     end
 
+    def find_instance(instance:)
+      predicate = -> (part) {
+        part == instance
+      }
+
+      find_first(predicate: predicate)
+    end
+
+    # Find the first element matching the predicate
+    #
+    # @param [Lambda] predicate
+    #
+    # @return [nil, Changex::EnginePart] Whether or not an Changex::EnginePart
+    # is found
+    def find_first(predicate:)
+      found = self.sub_components.find(&predicate)
+
+      if found
+        return found
+      else
+        self.sub_components.each do |sub_component|
+          found = sub_component.find_first(predicate: predicate)
+
+          if found
+            return found
+          end
+        end
+      end
+
+      nil
+    end
+
     NotAnEnginePart = Class.new(StandardError)
   end
 end
