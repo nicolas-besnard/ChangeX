@@ -81,8 +81,52 @@ describe Changex::EnginePart do
         engine_part_1 = described_class.new(name: "1", price: 10)
 
         ret = engine_part_1.find_all(predicate: -> (part) { part.price == 2.5 })
-        
+
         expect(ret).to eql([])
+      end
+    end
+  end
+
+  describe "#total_cost" do
+    context "has 1 sub-component" do
+      it 'returns the sum of the sub-component' do
+        engine_part_1 = described_class.new(name: "1", price: 10)
+        engine_part_11 = described_class.new(name: "11", price: 2.5)
+
+        engine_part_1 << engine_part_11
+
+        ret = engine_part_1.total_cost
+
+        expect(ret).to eql(engine_part_11.price)
+      end
+    end
+
+    context "has 2 sub-component" do
+      it 'returns the sum of the sub-component' do
+        engine_part_1 = described_class.new(name: "1", price: 10)
+        engine_part_11 = described_class.new(name: "11", price: 2.5)
+
+        engine_part_1 << engine_part_11
+        engine_part_1 << engine_part_11
+
+        ret = engine_part_1.total_cost
+
+        expect(ret).to eql(engine_part_11.price * 2)
+      end
+    end
+
+    context "engine part has 3 level" do
+      it 'returns the sum of the sub-component' do
+        engine_part_1 = described_class.new(name: "1", price: 10)
+        engine_part_11 = described_class.new(name: "11", price: 5)
+        engine_part_111 = described_class.new(name: "111", price: 2.5)
+
+        engine_part_11 << engine_part_111
+        engine_part_1 << engine_part_11
+
+        ret = engine_part_1.total_cost
+
+        expect(ret).to eql(5 + 2.5)
       end
     end
   end

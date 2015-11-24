@@ -73,6 +73,25 @@ module Changex
       find_all(predicate: predicate)
     end
 
+    def find_all_sub_components_with_name_and_price_less_than(name:, price:)
+      predicate = -> (part) {
+        part.price < price && part.name == name
+      }
+
+      find_all(predicate: predicate)
+    end
+
+    # Return the total cost of the EnginePart
+    #
+    # @return [Float] the total cost
+    def total_cost
+      sum = sub_components.inject(0) { |sum, sub_component| sub_component.price + sum }
+
+      self.sub_components.inject(sum) do |sum, sub_component|
+        sub_component.total_cost + sum
+      end
+    end
+
     # Find the first element matching the predicate
     #
     # @param [Lambda] predicate
