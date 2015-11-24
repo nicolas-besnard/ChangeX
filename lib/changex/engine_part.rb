@@ -57,6 +57,14 @@ module Changex
       find_all(predicate: predicate)
     end
 
+    def find_all_sub_components_with_price(price:)
+      predicate = -> (part) {
+        part.price == price
+      }
+
+      find_all(predicate: predicate)
+    end
+
     # Find the first element matching the predicate
     #
     # @param [Lambda] predicate
