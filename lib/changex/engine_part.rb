@@ -65,6 +65,14 @@ module Changex
       find_all(predicate: predicate)
     end
 
+    def find_all_sub_components_with_name_and_price_less_than(name:, price:)
+      predicate = -> (part) {
+        part.price < price && part.name == name
+      }
+
+      find_all(predicate: predicate)
+    end
+
     # Find the first element matching the predicate
     #
     # @param [Lambda] predicate
