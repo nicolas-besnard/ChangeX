@@ -18,5 +18,29 @@ require "changex"
   @wheel << @bolt
 end
 
+@steering_wheel = Changex::EnginePart.new(name: "steering wheel", price: 30)
+
+@car = Changex::EnginePart.new(name: "car", price: 1000)
+
+@front_bumper = Changex::EnginePart.new(name: "front_bumper", price: 50)
+@back_bumper = Changex::EnginePart.new(name: "back_bumper", price: 50)
+
+@front = Changex::EnginePart.new(name: "front", price: 0)
+@front << @front_bumper
+@front << @wheel
+@front << @wheel
+
+@back = Changex::EnginePart.new(name: "back", price: 0)
+@back << @back_bumper
+@back << @wheel
+@back << @wheel
+
+@cockpit = Changex::EnginePart.new(name: "cockpit", price: 1000)
+@cockpit << @steering_wheel
+@cockpit << @front
+@cockpit << @back
+
+@car << @cockpit
+
 require "irb"
 IRB.start
