@@ -10,5 +10,7 @@ require "changex"
 # require "pry"
 # Pry.start
 
+@spark_plug = Changex::EnginePart.new(name: "spark plug", price: 10)
+
 require "irb"
 IRB.start
