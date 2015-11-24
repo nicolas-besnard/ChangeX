@@ -11,6 +11,12 @@ require "changex"
 # Pry.start
 
 @spark_plug = Changex::EnginePart.new(name: "spark plug", price: 10)
+@wheel      = Changex::EnginePart.new(name: "wheel", price: 1)
+@bolt       = Changex::EnginePart.new(name: "bolt", price: 0.1)
+
+6.times do
+  @wheel << @bolt
+end
 
 require "irb"
 IRB.start
