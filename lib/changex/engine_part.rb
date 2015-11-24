@@ -49,6 +49,14 @@ module Changex
       find_first(predicate: predicate)
     end
 
+    def find_all_sub_components_by_name(name:)
+      predicate = -> (part) {
+        part.name == name
+      }
+
+      find_all(predicate: predicate)
+    end
+
     # Find the first element matching the predicate
     #
     # @param [Lambda] predicate
@@ -71,6 +79,28 @@ module Changex
       end
 
       nil
+    end
+
+    # Find all the element matching the predicate
+    #
+    # @param [Lambda] predicate
+    #
+    # @return [Array<Void>, Array<Changex::EnginePart] Whether or not
+    # Changex::EnginePart are found
+    def find_all(predicate:)
+      found = []
+
+      found += self.sub_components.select(&predicate)
+
+      self.sub_components.each do |sub|
+        found += sub.find_all(predicate: predicate)
+      end
+
+      if found.count == 0
+        return []
+      end
+
+      found
     end
 
     NotAnEnginePart = Class.new(StandardError)

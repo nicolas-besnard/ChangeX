@@ -59,4 +59,31 @@ describe Changex::EnginePart do
       expect(ret).to eql(engine_part_111)
     end
   end
+
+  describe "#find_all" do
+    context "there's a match" do
+      it "returns all the element matching the predicate" do
+        engine_part_1 = described_class.new(name: "1", price: 10)
+        engine_part_11 = described_class.new(name: "11", price: 2.5)
+        engine_part_111 = described_class.new(name: "111", price: 2.5)
+
+        engine_part_11 << engine_part_111
+        engine_part_1 << engine_part_11
+
+        ret = engine_part_1.find_all(predicate: -> (part) { part.price == 2.5 })
+
+        expect(ret).to eql([engine_part_11, engine_part_111])
+      end
+    end
+
+    context "there's no match" do
+      it "returns an empty array" do
+        engine_part_1 = described_class.new(name: "1", price: 10)
+
+        ret = engine_part_1.find_all(predicate: -> (part) { part.price == 2.5 })
+        
+        expect(ret).to eql([])
+      end
+    end
+  end
 end
